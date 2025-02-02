@@ -65,7 +65,9 @@
 		"cors": "2.8.5",
 		"discord.js": "14.16.3",
 		"express": "4.21.1",
-		"multer": "1.4.5-lts.1"
+		"multer": "1.4.5-lts.1",
+        "@telegraf/types": "7.1.0",
+		"telegraf": "4.16.3"
     },
     "devDependencies": {
         "@types/jest": "^29.5.14",

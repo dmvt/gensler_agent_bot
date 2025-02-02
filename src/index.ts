@@ -1,4 +1,3 @@
-import { createNodePlugin } from "@elizaos/plugin-node";
 import { DirectClient } from "./client-direct";
 import { PostgresDatabaseAdapter } from "@elizaos/adapter-postgres";
 import { SqliteDatabaseAdapter } from "@elizaos/adapter-sqlite";
@@ -31,6 +30,7 @@ import net from "net";
 import path from "path";
 import { fileURLToPath } from "url";
 import yargs from "yargs";
+import { TelegramClientInterface } from "./client-telegram";
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
@@ -554,6 +554,11 @@ export async function initializeClients(
         if (discordClient) clients.discord = discordClient;
     }
 
+    if (clientTypes.includes(Clients.TELEGRAM)) {
+        const telegramClient = await TelegramClientInterface.start(runtime);
+        if (telegramClient) clients.telegram = telegramClient;
+    }
+
     if (clientTypes.includes(Clients.TWITTER)) {
         const twitterClient = await TwitterClientInterface.start(runtime);
         if (twitterClient) {
@@ -609,24 +614,12 @@ export async function createAgent(
 ): Promise<AgentRuntime> {
     elizaLogger.log(`Creating runtime for character ${character.name}`);
 
-    nodePlugin ??= createNodePlugin();
-
-    const walletSecretSalt = getSecret(character, "WALLET_SECRET_SALT");
-
-    let goatPlugin: any | undefined;
-
     return new AgentRuntime({
         databaseAdapter: db,
         token,
         modelProvider: character.modelProvider,
         evaluators: [],
         character,
-        // character.plugins are handled when clients are added
-        plugins: [
-            nodePlugin,
-        ]
-            .flat()
-            .filter(Boolean),
         providers: [],
         managers: [],
         cacheManager: cache,
