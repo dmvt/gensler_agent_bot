@@ -1,4 +1,4 @@
-import { messageCompletionFooter, shouldRespondFooter } from "@elizaos/core";
+import { messageCompletionFooter, shouldRespondFooter } from "../core";
 
 export const telegramShouldRespondTemplate =
     `# About {{agentName}}:

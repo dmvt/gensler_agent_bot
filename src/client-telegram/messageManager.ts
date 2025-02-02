@@ -1,38 +1,36 @@
-import type { Message } from "@telegraf/types";
-import type { Context, Telegraf } from "telegraf";
 import {
     composeContext,
-    elizaLogger,
-    ServiceType,
     composeRandomUser,
-} from "@elizaos/core";
-import { getEmbeddingZeroVector } from "@elizaos/core";
-import {
     type Content,
+    elizaLogger,
+    generateMessageResponse, generateShouldRespond,
+    getEmbeddingZeroVector,
     type HandlerCallback,
     type IAgentRuntime,
     type IImageDescriptionService,
+    type Media,
     type Memory,
     ModelClass,
+    ServiceType,
     type State,
+    stringToUuid,
     type UUID,
-    type Media,
-} from "@elizaos/core";
-import { stringToUuid } from "@elizaos/core";
-import { generateMessageResponse, generateShouldRespond } from "@elizaos/core";
-import {
-    telegramMessageHandlerTemplate,
-    telegramShouldRespondTemplate,
-    telegramAutoPostTemplate,
-    telegramPinnedMessageTemplate,
-} from "./templates";
-import { cosineSimilarity, escapeMarkdown } from "./utils";
+} from "../core";
+import type { Message } from "@telegraf/types";
+import type { Context, Telegraf } from "telegraf";
 import {
     MESSAGE_CONSTANTS,
-    TIMING_CONSTANTS,
     RESPONSE_CHANCES,
     TEAM_COORDINATION,
+    TIMING_CONSTANTS,
 } from "./constants";
+import {
+    telegramAutoPostTemplate,
+    telegramMessageHandlerTemplate,
+    telegramPinnedMessageTemplate,
+    telegramShouldRespondTemplate,
+} from "./templates";
+import { cosineSimilarity, escapeMarkdown } from "./utils";
 
 import fs from "fs";
 
