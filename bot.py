@@ -65,7 +65,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     try:
         response = await client.chat.completions.create(
-            model="gpt-4-0125-preview",
+            model="gpt-4-turbo",
             messages=[
                 {"role": "system", "content": PERSONAS[mode]},
                 {"role": "user", "content": update.message.text}
